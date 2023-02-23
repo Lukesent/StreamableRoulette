@@ -23,33 +23,30 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script>
-    function randomString() {
-      var chars = '01234567890abcdefghiklmnopqrstuvwxyz'; 
-      var stringlength = 6; 
-      var text = '';
-      for (var i = 0; i < stringlength; i++) {
-        var rnum = Math.floor(Math.random() * chars.length);
-        text += chars.substring(rnum,rnum+1);
+function randomString() {
+  var chars = '01234567890abcdefghiklmnopqrstuvwxyz';
+  var stringlength = 6;
+  var text = '';
+
+  for (var i = 0; i < stringlength; i++) {
+    var rnum = Math.floor(Math.random() * chars.length);
+    text += chars.substring(rnum, rnum + 1);
+  }
+
+  var source = 'https://streamable.com/' + text;
+  var videocontainer = document.getElementById('myvid');
+  var videosource = document.getElementById('myvid');
+
+  fetch(source)
+    .then(response => {
+      if (response.status === 200) {
+        videosource.setAttribute('src', source);
+      } else {
+        randomString();
       }
-
-      var source = 'https://streamable.com/' + text;
-      var videocontainer = document.getElementById('myvid');
-      var videosource = document.getElementById('myvid');
-
-      fetch(source)
-        .then(response => {
-          if (response.status == 404) {
-            randomString(); // If video not found, try again
-          } else {
-            videosource.setAttribute('src', source);
-          }
-        })
-        .catch(error => console.log(error));
-    }
-
-    $(document).ready(function() { 
-      randomString();
-    });
+    })
+    .catch(error => console.log(error));
+});
   </script>
 </body>
 </html>
