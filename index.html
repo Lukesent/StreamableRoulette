@@ -24,7 +24,15 @@ function randomString() {
     var videocontainer = document.getElementById('myvid');
     var videosource = document.getElementById('myvid');
 
-    videosource.setAttribute('src', source);
+    fetch(source)
+      .then(response => {
+        if (response.status == 404) {
+          randomString(); // If video not found, try again
+        } else {
+          videosource.setAttribute('src', source);
+        }
+      })
+      .catch(error => console.log(error));
   }
 
 $(document).ready(function() { 
